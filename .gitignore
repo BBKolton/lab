@@ -1,0 +1,6 @@
+settings.py
+*.pyc
+*myvenv*
+db.mysql
+/static
+.DS_Store
