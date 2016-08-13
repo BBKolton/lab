@@ -5,4 +5,4 @@ from front.models import Urls
 class UrlsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Urls
-        fields = ('id', 'short', 'long', 'status', 'title')
+        fields = ('id', 'short', 'long', 'status', 'title', 'wayback', 'timestamp')

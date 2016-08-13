@@ -1,0 +1,17 @@
+<head>
+	<title>URL Shortener</title>
+	<meta author='bbkolton' />
+</head>
+
+<body>
+	{% if mess %}
+		<h2>{{ mess }}</h2>
+	{% endif %}
+	<p>Please login to add or delete URLS</p>
+	<form action='' method='POST'>
+		{% csrf_token %}
+		<input type='username' name="username" placeholder="username" />
+		<input type='password' name="password" placeholder="password" />
+		<input type="submit" value="Submit" />
+	</form>
+</body>

@@ -1,54 +1,54 @@
 <head>
 	<title>URL Shortener</title>
 	<meta author='bbkolton' />
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+	<script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
 </head>
 
 <body>
-	<h1>Welcome to the URL Shortener!</h1>
-	<p>Browse our shortened urls or add a new one!</p>
-	<table>
-		<thead>
-			<tr>
-				<th>Title</th>
-				<th>Shortened</th>
-				<th>Long</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for url in urls %}
+	<div class='container'>
+		<h1>Welcome to the URL Shortener!</h1>
+		<p>Browse our shortened urls or add a new one!</p>
+		<table class='table'>
+			<thead>
 				<tr>
-					<td>{{ url.title }}</td>
-					<td>{{ url.short }}</td>
-					<td>{{ url.long }}</td>
-					<td><form action="/lab/url/{{ url.id}}" method='DELETE'>
-						<input type='hidden' name='id' value='url.pk' />
-						<button onclick=" var req = new XMLHttpRequest()
-										  req.open('DELETE', 'http://bbkolton.info344.com/lab/url/{{url.id}}', true)
-										  reg.send(); ">Delete</button>
-					</form></td>
+					<th>Title</th>
+					<th>Shortened</th>
+					<th>Long</th>
+					<th>Archive</th>
+					<th>Timestamp</th>
+					<th></th>
 				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				{% for url in urls %}
+					<tr>
+						<td>{{ url.title }}</td>
+						<td>{{ url.short }}</td>
+						<td>{{ url.long }}</td>
+						<td>{{ url.wayback}}</td>
+						<td>{{ url.timestamp}}</td>
+						<td><form action='deleteurl/{{url.id}}' method='GET'>
+							<button>Delete</button>
+						</form></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 
 
 
-	<p>Use this form to add a new url</p>
-	<form action="/lab/listall/" method='POST'>
-		<label>Url
-			<input type='text' name='long' />
-		</label>
-		<label>Shortened Url
-			<input type='text' name='short' />
-		</label>
-		<label>Title of Page
-			<input type='text' name='title' />
-		</label>
-		<label>Status
-			<input type='text' name='status' />
-		</label>
-		<input type='submit' value='Submit' />
-	</form>
+		<p>Use this form to add a new url</p>
+		<form action="/lab/listall/" method='POST'>
+			{% csrf_token %}
+			<label>Url
+				<input type='text' name='short' />
+			<input type='submit' value='Submit' />
+			</label>
+		</form>
 
-
+		<form action="/lab/logout/" method="GET">
+			<p>Done for now? <button type="submit">Logout</button></p>
+		</form>
+	</div>
+</body>
