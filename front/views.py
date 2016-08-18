@@ -131,3 +131,14 @@ def deleteurl(request, pk, format=None):
 
     url.delete()
     return redirect('/lab')
+
+@ratelimit(key='ip', group=None, rate='10/m', method=[ 'GET', 'POST', 'DELETE'], block=True)
+@api_view(['POST'])
+def picture(request, pk, format=None):
+    if request.user.is_authenticated() is False:
+        return redirect('/lab/login/')
+
+    url = Urls.objects.get(pk=pk)
+    requests.get('http://bbkolton.info344.com:1234/' + url.long)    
+
+    return redirect('/lab')

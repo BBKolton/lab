@@ -9,6 +9,7 @@ urlpatterns = [
  url(r'^listall/$', views.listall),
  url(r'^login/$', views.login),
  url(r'^logout/$', views.logout),
+ url(r'^picture/(?P<pk>[0-9]+)/$', views.picture),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

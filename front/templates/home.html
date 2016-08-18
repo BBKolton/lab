@@ -15,6 +15,7 @@
 					<th>Title</th>
 					<th>Shortened</th>
 					<th>Long</th>
+					<th>Image</th>
 					<th>Archive</th>
 					<th>Timestamp</th>
 					<th></th>
@@ -26,6 +27,7 @@
 						<td>{{ url.title }}</td>
 						<td>{{ url.short }}</td>
 						<td>{{ url.long }}</td>
+						<td><a href='/lab/static/{{ url.long|slice:"12:" }}.png'>Image</a></td>
 						<td>{{ url.wayback}}</td>
 						<td>{{ url.timestamp}}</td>
 						<td><form action='deleteurl/{{url.id}}' method='GET'>
