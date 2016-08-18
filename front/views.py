@@ -5,9 +5,12 @@ from front.models import Urls
 from front.serializers import UrlsSerializer
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as loginFunc, logout as logoutFunc
+from ratelimit.decorators import ratelimit
 import requests
 import re #regex
 
+
+@ratelimit(key='ip', group=None, rate='10/m', method=[ 'GET', 'POST', 'DELETE'], block=True)
 def index(request): 
     urls = Urls.objects.all()
     if (request.user.is_authenticated()):
@@ -16,11 +19,13 @@ def index(request):
         return render(request, 'unauthed.html', {'urls': urls})
 
 
+@ratelimit(key='ip', group=None, rate='10/m', method=[ 'GET', 'POST', 'DELETE'], block=True)
 def logout(request):
     logoutFunc(request)
     return redirect('/lab/');
 
 
+@ratelimit(key='ip', group=None, rate='10/m', method=[ 'GET', 'POST', 'DELETE'], block=True)
 def login(request):
     if request.method == 'GET':
         return render(request, 'login.html')
@@ -34,6 +39,7 @@ def login(request):
             return render(request, 'login.html', {'mess': "Invalide username or password"})
     
 
+@ratelimit(key='ip', group=None, rate='10/m', method=[ 'GET', 'POST', 'DELETE'], block=True)
 @api_view(['GET', 'POST'])
 def listall(request, format=None):
     print('herp derp')
@@ -65,6 +71,8 @@ def listall(request, format=None):
         print(archive)
         print(timestamp)
 
+        requests.get('http://bbkolton.info344.com:1234/' + r.url)
+
         serializer = UrlsSerializer(data={'short': request.POST['short'],
                                           'long': r.url,
                                           'status': r.status_code,
@@ -82,6 +90,7 @@ def listall(request, format=None):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@ratelimit(key='ip', group=None, rate='10/m', method=[ 'GET', 'POST', 'DELETE'], block=True)
 @api_view(['GET', 'PUT', 'DELETE'])
 def url(request, pk, format=None):
     """
@@ -110,6 +119,7 @@ def url(request, pk, format=None):
         url.delete()
         return redirect('/lab/')
 
+@ratelimit(key='ip', group=None, rate='10/m', method=[ 'GET', 'POST', 'DELETE'], block=True)
 def deleteurl(request, pk, format=None):
     if request.user.is_authenticated() is False:
         return redirect('/lab/login/')

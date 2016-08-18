@@ -4,3 +4,5 @@ settings.py
 db.mysql
 /static
 .DS_Store
+.Trash*/
+nohup.out
